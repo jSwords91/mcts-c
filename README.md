@@ -32,24 +32,15 @@ The best move is chosen based on average reward from simulations.
 
 In more detail:
 
-Selection:
-    - Uses UCB1 (exploitation + exploration) to traverse from root to a leaf node.
+Selection: Uses UCB1 (exploitation + exploration) to traverse from root to a leaf node.
 
-Expansion:
+Expansion:Expands one of the untried valid moves for a node.
 
-    - Expands one of the untried valid moves for a node.
+Simulation (Rollout): Runs a random playout until terminal state (X, O, or draw).
 
-Simulation (Rollout):
+Backpropagation: Rewards are propagated back up the tree, with reward +1 for win, -1 for loss.
 
-    - Runs a random playout until terminal state (X, O, or draw).
-
-Backpropagation:
-
-    - Rewards are propagated back up the tree, with reward +1 for win, -1 for loss.
-
-Best Move Selection:
-
-    - Chooses the move with the highest average value at root after SIMULATION_COUNT rollouts.
+Best Move Selection: Chooses the move with the highest average value at root after SIMULATION_COUNT rollouts.
 
 
 
