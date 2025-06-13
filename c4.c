@@ -40,13 +40,26 @@ GameState createInitialState() {
 }
 
 void printBoard(GameState state) {
-    for (int r = 0; r < ROWS; r++) {
-        for (int c = 0; c < COLS; c++)
-            printf(" %c ", state.board[r][c]);
-        printf("\n");
+    printf("\n   ");
+    for (int c = 0; c < COLS; c++) {
+        printf(" %d  ", c + 1);  // Column headers
     }
-    for (int c = 1; c <= COLS; c++) printf(" %d ", c);
-    printf("\n\n");
+    printf("\n");
+
+    for (int r = 0; r < ROWS; r++) {
+        printf("   ");
+        for (int c = 0; c < COLS; c++) {
+            char symbol = state.board[r][c];
+            if (symbol == 'X') printf("| \033[1;31mX\033[0m ");  // Bold Red
+            else if (symbol == 'O') printf("| \033[1;34mO\033[0m ");  // Bold Blue
+            else printf("|   ");
+        }
+        printf("|\n");
+    }
+
+    printf("   ");
+    for (int c = 0; c < COLS; c++) printf("----");
+    printf("-\n\n");
 }
 
 bool isFull(GameState state) {

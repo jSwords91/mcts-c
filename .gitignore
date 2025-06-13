@@ -1,1 +1,7 @@
-.exe
+*.exe
+*.pth
+*.csv
+*.txt
+*.json
+*.log
+*.pth
