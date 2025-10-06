@@ -1,4 +1,4 @@
-# Monte Carlo Tree Search (MCTS) Connect-4 — in Pure C
+# Monte Carlo Tree Search (MCTS) in Pure C
 
 This project implements a **Connect-4 AI using Monte Carlo Tree Search (MCTS)** written entirely in C.  
 It’s designed as a **pedagogical reference** — clear, self-contained, and heavily commented.  
