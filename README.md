@@ -1,46 +1,83 @@
-# Monte Carlo Tree Search in C
+# Monte Carlo Tree Search (MCTS) Connect-4 — in Pure C
 
-A pure C implementation of Monte Carlo Tree Search over the game **"connect-4"**.
+This project implements a **Connect-4 AI using Monte Carlo Tree Search (MCTS)** written entirely in C.  
+It’s designed as a **pedagogical reference** — clear, self-contained, and heavily commented.  
+The code demonstrates every phase of the MCTS algorithm in a working game loop you can play from the terminal.
 
-This will run a game of connect-4 (6x7 board) in your command line. The AI is ~unbeatable, it runs 10,000 simulations by default at each turn.
+---
 
-During AI "thinking" time, you'll see some stats such as the number of visits for a column option, the average score, and the win % from the subsequent rollouts.
+## Overview
 
-MCTS agent with:
-- UCT (Upper Confidence Bound for Trees)
-- Random rollouts for simulation
+Monte Carlo Tree Search (MCTS) is a general decision-making algorithm for games and planning problems.  
+It searches by repeatedly **simulating random games**, using those results to bias future exploration toward better moves.
 
-## **Compilation**
+The algorithm cycles through four key steps:
 
-Compile with ```gcc -o c4 c4.c```
+| Step | Name | Description | Key Idea |
+|------|------|--------------|-----------|
+| 1 | **Selection** | Descend the tree using the **UCB1** formula | Balance exploration vs. exploitation |
+| 2 | **Expansion** | Add a new child node for one untried move | Grow the tree gradually |
+| 3 | **Simulation** | Play random moves until the game ends | Estimate long-term reward |
+| 4 | **Backpropagation** | Update statistics on the path back to the root | Share value upward |
 
-Then run with ```/.c4```
+Over many iterations, the tree concentrates rollouts on promising moves.  
+The best move is usually the one visited most often at the root.
 
-## Monte Carlo Tree Search
+---
 
-Monte Carlo Tree Search consists of four steps:
+## Features
 
-- **Selection**: Traverse the tree from the root using UCT to select the most promising node.
+- Complete **Connect-4** implementation (6×7 board)
+- Full **MCTS (UCT)** search loop:
+  - UCB1 selection  
+  - Node expansion  
+  - Random rollouts  
+  - Backpropagation of results
+- **Terminal interface** to play against the AI
+- **Colorised board rendering** for clarity
+- Debug output summarising visit counts and win rates
 
-- **Expansion**: If the node has untried moves, create a new child by applying one.
+## 🧠 UCB Formula
 
-- **Simulation**: Play a random game from this new state until it ends.
+During selection, the algorithm scores each child `i` as:
 
-- **Backpropagation**: Propagate the result of the simulation back up the tree.
+\[
+\text{UCB1}_i = \frac{Q_i}{n_i} + c \sqrt{\frac{\ln N}{n_i}}
+\]
 
-The best move is chosen based on average reward from simulations.
+Where:
+- \( Q_i \): total accumulated reward of child  
+- \( n_i \): visits to child  
+- \( N \): total visits of parent  
+- \( c \): exploration constant (≈ √2 works well)
 
-In more detail:
+This balances:
+- **Exploration** (visit nodes with few samples)  
+- **Exploitation** (visit nodes with high average reward)
 
-Selection: Uses UCB1 (exploitation + exploration) to traverse from root to a leaf node.
+---
 
-Expansion:Expands one of the untried valid moves for a node.
+## Running
 
-Simulation (Rollout): Runs a random playout until terminal state (X, O, or draw).
+### 1. Compile
 
-Backpropagation: Rewards are propagated back up the tree, with reward +1 for win, -1 for loss.
+Use any standard C compiler:
 
-Best Move Selection: Chooses the move with the highest average value at root after SIMULATION_COUNT rollouts.
+```bash
+gcc c4.c -o c4 -lm
+```
 
+### 2. Run
 
+```bash
+./c4
+```
 
+## Note on Exploration
+
+Exploration Constant:
+
+```EXPLORATION_PARAM = 1.414```, (√2) is a good default.
+
+Larger → more exploration
+Smaller → greedier search
