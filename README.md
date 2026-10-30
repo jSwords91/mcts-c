@@ -32,15 +32,15 @@ Each iteration of MCTS consists of **four stages**:
 Start from the root node (the current board).  
 Keep selecting child nodes according to the **UCB1 formula**:
 
-\[
+```math
 UCB1 = \frac{Q_i}{n_i} + c \sqrt{\frac{\ln N}{n_i}}
-\]
+```
 
 Where:
-- \( Q_i \) = total reward from simulations for child *i*
-- \( n_i \) = number of times child *i* has been visited
-- \( N \) = number of times the parent has been visited
-- \( c \) = exploration constant (≈ √2 is common)
+- $Q_i$ = total reward from simulations for child *i*
+- $n_i$ = number of times child *i* has been visited
+- $N$ = number of times the parent has been visited
+- $c$ = exploration constant (≈ √2 is common)
 
 Intuition:
 - The first term (`Q_i / n_i`) rewards moves that have *performed well so far*  
@@ -118,9 +118,7 @@ gcc c4.c -o c4 -lm
 
 ## Note on Exploration
 
-Exploration Constant:
+The exploration constant `EXPLORATION_PARAM = 1.414` (≈ √2) is a good default:
 
-```EXPLORATION_PARAM = 1.414```, (√2) is a good default.
-
-Larger → more exploration
-Smaller → greedier search
+- Larger → more exploration
+- Smaller → greedier search
